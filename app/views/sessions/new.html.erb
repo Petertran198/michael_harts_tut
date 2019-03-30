@@ -1,0 +1,22 @@
+<% provide(:title, "Login") %>
+<h1> Login </h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <!-- Because sessions controller doesnt have a model aka an @instance this will tell the form_for helper that this is for the :session and the url is where the form will be submitted to, in this case the create action --> 
+    <%= form_for(:session, url: login_path) do |f| %>
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "form-control"%>
+
+      <%= f.submit "Log in", class: "btn btn-primary" %>
+
+
+    <% end %>
+    <br>
+    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+
+  </div><!-- end of col -->
+</div>

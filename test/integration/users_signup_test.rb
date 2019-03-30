@@ -38,6 +38,10 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     # assert_not pass when it recieves a false, if flash.empty? returns true that means there is no flash msg
     assert_not flash.empty?
+    #checks that the user is logged in after signing up
+    # is_logged_in? is identical to logged_in? helper  but helper methods aren’t available in tests so u got to create one in the test_helper.rb file
+    assert is_logged_in?
+
   end
 
 
