@@ -10,8 +10,12 @@ class SessionsController < ApplicationController
     # params[:session][:email] is how to access the password submitted in the form
     if user && user.authenticate(params[:session][:password])
     # If u find the user and their password is correct ,log the user in and redirect to the user's show page.
-    log_in user ## predefined method in helper 
-    redirect_to user_path(user)
+    ## predefined method in helper 
+      log_in user 
+      # checks if the checkbox in the loging form is checked or not,1 = checked 
+      #if checked use the remember(user) method else forget(user)
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)     
+      redirect_to user_path(user)
     else
       #render new and display a vague error message that explains why
       flash.now[:danger] = "Invalid email/password combination"
@@ -20,7 +24,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_path
   end
 

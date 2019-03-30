@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  #create an accessible attribute
+  attr_accessor :remember_token
+
   before_save { email.downcase! }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
@@ -17,6 +20,33 @@ class User < ApplicationRecord
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+
+  # Returns a random token for remembering a user via cookies.
+  #uses the built-in  SecureRandom.urlsafe_base64 provided by ruby 
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # Remembers a user in the database for use in persistent sessions.
+  #.digest is a built-in ruby method that crytopgraphically secure the remember_token
+  #remeber_digest is an attribute we stored in the schema
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  # Returns true if the given token matches the digest. 
+  #remember_token in this context is just a local variable not the same as the ones above
+  def authenticated?(remember_token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  # Forgets a user.
+  def forget
+    update_attribute(:remember_digest, nil)
   end
 
 end

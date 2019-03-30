@@ -6,13 +6,35 @@ module SessionsHelper
   end
 
 
+  # Remembers a user in a persistent session.
+  def remember(user)
+    # calls user.remember in the model pg,generating a remember token and saving its digest to the database
+    user.remember
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
+  end
 
-  # Returns the current logged-in user (if any).
+
+  # Returns the user corresponding to the remember token cookie.
   def current_user
-    if session[:user_id]
-      #if there is a @current_user use it if not find the id of the user where the session[:user_id] matches
-      @current_user ||= User.find_by(id: session[:user_id])
+    #if a session[:user_id] exist
+    if (user_id = session[:user_id])
+      @current_user ||= User.find_by(id: user_id)
+    #elsif a cookies[:user_id] exist
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in user
+        @current_user = user
+      end
     end
+  end
+
+  # Forgets a persistent session.
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
   end
 
 
@@ -24,6 +46,7 @@ module SessionsHelper
 
   # Logs out the current user.
   def log_out
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
   end
