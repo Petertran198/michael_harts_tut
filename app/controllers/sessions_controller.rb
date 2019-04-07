@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       # checks if the checkbox in the loging form is checked or not,1 = checked 
       #if checked use the remember(user) method else forget(user)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)     
-      redirect_to user_path(user)
+      redirect_back_or user_path(user)
     else
       #render new and display a vague error message that explains why
       flash.now[:danger] = "Invalid email/password combination"
