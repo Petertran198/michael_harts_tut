@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   #Before_action applies to every action in controller this is to specify that it is only for update and edit action
   before_action :logged_in_user, only: [:index, :update, :edit, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: [:destroy]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: [:destroy]
 
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -20,12 +20,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
-    if @user.save
       # log_in is a session helper 
-      log_in @user
-      flash[:success] = "Thank you for signing up. "
-      redirect_to user_path(@user)
+    if @user.save
+      # send account activation link to email
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
+
     else
       render "new"
     end
@@ -57,17 +58,20 @@ private
       params.require(:user).permit(:name,:email,:password, :password_confirmation)
     end
 
+       # Before filters
+
+    # Confirms a logged-in user.
     def logged_in_user
       unless logged_in?
         store_location
         flash[:danger] = "Please log in."
-        redirect_to root_path
+        redirect_to login_url
       end
     end
 
+    # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
-      #redirects to root path unless correct_user? helper Rrturns true if the given user is the current user.
       redirect_to(root_url) unless current_user?(@user)
     end
 

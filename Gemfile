@@ -68,6 +68,5 @@ gem 'sassc-rails', '>= 2.1.0'
 gem 'rails-controller-testing' 
 gem 'jquery-rails'
 gem 'faker',          '1.7.3'
-gem 'will_paginate', '~> 3.1.0'
-
-
+gem 'will_paginate', '~> 3.1', '>= 3.1.7'
+gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2'
