@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   #create  accessible attributes
   attr_accessor :remember_token, :activation_token
+  #dependent: :destroy arranges for the dependent microposts to be destroyed when the user itself is destroyed
+  has_many :microposts, dependent: :destroy
 
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -52,6 +54,10 @@ class User < ApplicationRecord
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
 

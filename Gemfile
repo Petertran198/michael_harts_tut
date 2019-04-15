@@ -27,8 +27,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.12'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -70,3 +69,8 @@ gem 'jquery-rails'
 gem 'faker',          '1.7.3'
 gem 'will_paginate', '~> 3.1', '>= 3.1.7'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2'
+#image uploading
+gem 'carrierwave',             '1.2.2'
+# Use ActiveStorage variant
+gem 'mini_magick',             '4.7.0'
+gem 'fog', '1.42'
