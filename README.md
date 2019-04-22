@@ -6,7 +6,7 @@ password: password
 
 ### Functionalites: 
 * following and followers
-*live feed info 
+* live feed info 
 * authorization and authentication 
 * tweets 
 
