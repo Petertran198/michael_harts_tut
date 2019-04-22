@@ -11,12 +11,12 @@ class Micropost < ApplicationRecord
 
 private
 
-    # Validates the size of an uploaded picture.
+    # Validates the size of an uploaded picture from carrier-wave.
     def picture_size
       if picture.size > 5.megabytes
         errors.add(:picture, "should be less than 5MB")
       end
     end
 
-    
+
 end
