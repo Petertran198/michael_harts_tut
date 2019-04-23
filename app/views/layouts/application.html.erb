@@ -3,22 +3,25 @@
   <head>
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
+    <%= favicon_link_tag %>
     <%= stylesheet_link_tag    'application', media: 'all',
                                               'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= render "layouts/shim" %>
   </head>
-  <body>
-    <%= render 'layouts/header' %>
-    <div class="container">
-      <% flash.each do |message_type, message| %>
-        <!-- "alert-<%= message_type %>" is using string interpolation to create custom class for each type of flash -->
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-      <!-- display useful info for each page in development using  built in debug method and params -->
-      <%= debug(params) if Rails.env.development? %>
-    </div>
+  <body class="bg">
+    <div class="card-overlay">
+      <%= render 'layouts/header' %>
+      <div class="container">
+        <% flash.each do |message_type, message| %>
+          <!-- "alert-<%= message_type %>" is using string interpolation to create custom class for each type of flash -->
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
+        <%= yield %>
+        <%= render 'layouts/footer' %>
+        <!-- display useful info for each page in development using  built in debug method and params -->
+        <%= debug(params) if Rails.env.development? %>
+      </div>
+    </div>  
   </body>
 </html>

@@ -1,6 +1,6 @@
 <% provide(:title, "Login") %>
 <h1> Login </h1>
-
+<hr>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <!-- Because sessions controller doesnt have a model aka an @instance this will tell the form_for helper that this is for the :session and the url is where the form will be submitted to, in this case the create action --> 
@@ -16,7 +16,7 @@
         <span>Remember me on this computer</span>
       <% end %>      
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <%= f.submit "Log in", class: "btn btn-info" %>
 
 
     <% end %>

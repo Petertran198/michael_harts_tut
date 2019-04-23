@@ -69,6 +69,16 @@ p {
   text-decoration: none;
 }
 
+/* layout bg */
+.bg {
+
+
+  background-image: url("https://images.unsplash.com/photo-1517249865690-ee36eb09e596?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");  height: 100%;
+  background-position:  top;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
 
 
 /* footer using scss */
