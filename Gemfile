@@ -74,3 +74,4 @@ gem 'carrierwave',             '1.2.2'
 # Use ActiveStorage variant
 gem 'mini_magick',             '4.7.0'
 gem 'fog', '1.42'
+gem "font-awesome-rails"
